@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>WOT Max Damage Platoon</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #0a0a0f;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+    }
+
+    .widget {
+        width: 560px;
+        background: linear-gradient(145deg, #1a1a2e 0%, #0f0f1a 100%);
+        border-radius: 16px;
+        padding: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 107, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .widget::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #ff6b00, #ffd166);
+        z-index: 2;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, #ff6b00, #ffd166);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .players-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .player-card {
+        flex: 1;
+        background: rgba(25, 25, 35, 0.8);
+        border-radius: 12px;
+        padding: 12px;
+        transition: all 0.3s ease;
+        position: relative;
+        border: 2px solid transparent;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .player-card.winner {
+        border-color: #ff6b00;
+        background: rgba(35, 25, 25, 0.9);
+        box-shadow: 0 0 25px rgba(255, 107, 0, 0.4);
+    }
+
+    .player-card.winner::after {
+        content: '🏆';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem;
+        z-index: 1;
+    }
+
+    .player-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .player-avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #2a2a4a, #1a1a2e);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #ffd166;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .player-info h2 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: #f8fafc;
+        text-align: center;
+    }
+
+    .damage-section {
+        text-align: center;
+        margin-bottom: 12px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .damage-value {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #ff6b00;
+        text-shadow: 0 0 15px rgba(255, 107, 0, 0.5);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .damage-label {
+        font-size: 0.7rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stats-section {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .top-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        padding: 6px;
+        background: rgba(15, 15, 25, 0.6);
+        border-radius: 6px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+        color: #94a3b8;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .stat-label i {
+        font-size: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+
+    .tank-row {
+        padding: 10px;
+        background: rgba(15, 15, 25, 0.7);
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        border-top: 2px solid #06d6a0;
+    }
+
+    .tank-label {
+        font-size: 0.6rem;
+        color: #94a3b8;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .tank-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #06d6a0;
+        text-align: center;
+        font-style: italic;
+    }
+
+    .vs-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        flex-shrink: 0;
+    }
+
+    .vs {
+        background: rgba(255, 255, 255, 0.1);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.8rem;
+        color: #ffd166;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .platoon-stats {
+        background: rgba(20, 20, 30, 0.9);
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 12px;
+        border-left: 3px solid #06d6a0;
+    }
+
+    .platoon-stats h3 {
+        color: #06d6a0;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .platoon-stats h3 i {
+        font-size: 0.8rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .stat-card {
+        background: rgba(30, 30, 40, 0.8);
+        border-radius: 6px;
+        padding: 8px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .stat-card .value {
+        font-size: 1.1rem;
+        font-weight: 900;
+        color: #ffd166;
+        margin-bottom: 2px;
+    }
+
+    .stat-card .label {
+        color: #94a3b8;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+</style>
+</head>
+
+<body>
+<div class="widget">
+    <div class="header">
+        <h1 class="title">Максимальна Шкода</h1>
+    </div>
+
+    <div class="players-container">
+        <div id="p1" class="player-card">
+            <div class="player-header">
+                <div class="player-avatar" id="p1_avatar" style="background-image: url('https://saxonua.github.io/site/logo.png');">
+                    <!-- Логотип завантажується як фон -->
+                </div>
+                <div class="player-info">
+                    <h2>SaXon</h2>
+                </div>
+            </div>
+
+            <div class="damage-section">
+                <div class="damage-value" id="p1_damage">0</div>
+                <div class="damage-label">Максимальна шкода</div>
+            </div>
+
+            <div class="stats-section">
+                <div class="top-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Середня шкода</span>
+                        </div>
+                        <div class="stat-value" id="p1_avg_damage">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i class="fas fa-skull"></i>
+                            <span>Фраги</span>
+                        </div>
+                        <div class="stat-value" id="p1_total_frags">0</div>
+                    </div>
+                </div>
+                
+                <div class="tank-row">
+                    <div class="tank-label">
+                        <i class="fas fa-flag"></i>
+                        <span>Танк</span>
+                    </div>
+                    <div class="tank-value" id="p1_best_tank">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vs-container">
+            <div class="vs">VS</div>
+        </div>
+
+        <div id="p2" class="player-card">
+            <div class="player-header">
+                <div class="player-avatar">
+                    <i class="fas fa-helmet-battle"></i>
+                </div>
+                <div class="player-info">
+                    <h2>Devil_484</h2>
+                </div>
+            </div>
+
+            <div class="damage-section">
+                <div class="damage-value" id="p2_damage">0</div>
+                <div class="damage-label">Максимальна шкода</div>
+            </div>
+
+            <div class="stats-section">
+                <div class="top-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Середня шкода</span>
+                        </div>
+                        <div class="stat-value" id="p2_avg_damage">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i class="fas fa-skull"></i>
+                            <span>Фраги</span>
+                        </div>
+                        <div class="stat-value" id="p2_total_frags">0</div>
+                    </div>
+                </div>
+                
+                <div class="tank-row">
+                    <div class="tank-label">
+                        <i class="fas fa-flag"></i>
+                        <span>Танк</span>
+                    </div>
+                    <div class="tank-value" id="p2_best_tank">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="platoon-stats">
+        <h3><i class="fas fa-users"></i> Статистика взводу</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="value" id="total_battles">0</div>
+                <div class="label">Бої</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="win_rate">0%</div>
+                <div class="label">Winrate</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="total_damage">0</div>
+                <div class="label">Загальна шкода</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="total_platoon_frags">0</div>
+                <div class="label">К-ть фрагів</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const SHEET_ID = "17phnEn-NW-OnrZg4DcW65r-Xoq6ScsdVjS5yL0SS3fk";
+const GID = "506446790";
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+
+async function loadData() {
+    try {
+        const response = await fetch(CSV_URL);
+        const text = await response.text();
+        const rows = text.split("\n").slice(1);
+
+        let maxSaXon = 0;
+        let maxDevil = 0;
+        let totalBattles = 0;
+        let totalWins = 0;
+        let totalDamage = 0;
+        let totalFrags = 0;
+        let saXonTotalDamage = 0;
+        let devilTotalDamage = 0;
+        let saXonTotalFrags = 0;
+        let devilTotalFrags = 0;
+        let saXonBestTank = '-';
+        let devilBestTank = '-';
+
+        rows.forEach((row, index) => {
+            if (!row.trim()) return;
+            
+            const cols = row.split(",");
+            if (cols.length < 9) return;
+
+            const dmg1 = parseInt(cols[3]) || 0; // D - SaXon damage
+            const dmg2 = parseInt(cols[4]) || 0; // E - Devil damage
+            const frags1 = parseInt(cols[5]) || 0; // F - SaXon фраги
+            const frags2 = parseInt(cols[6]) || 0; // G - Devil фраги
+            const win = parseInt(cols[8]) || 0;  // I - Win (1) or Loss (0)
+            const tank1 = cols[1] || '-'; // B - SaXon танк
+            const tank2 = cols[2] || '-'; // C - Devil танк
+            
+            // Track max damage for SaXon
+            if (dmg1 > maxSaXon) {
+                maxSaXon = dmg1;
+                saXonBestTank = tank1;
+            }
+            
+            // Track max damage for Devil
+            if (dmg2 > maxDevil) {
+                maxDevil = dmg2;
+                devilBestTank = tank2;
+            }
+            
+            // Sum totals
+            saXonTotalDamage += dmg1;
+            devilTotalDamage += dmg2;
+            totalDamage += dmg1 + dmg2;
+            
+            saXonTotalFrags += frags1;
+            devilTotalFrags += frags2;
+            totalFrags += frags1 + frags2;
+            
+            if (!isNaN(win)) {
+                totalBattles++;
+                totalWins += win;
+            }
+        });
+
+        // Calculate winrate
+        const winRate = totalBattles > 0 ? ((totalWins / totalBattles) * 100).toFixed(1) : "0.0";
+        const avgSaXonDamage = totalBattles > 0 ? Math.round(saXonTotalDamage / totalBattles) : 0;
+        const avgDevilDamage = totalBattles > 0 ? Math.round(devilTotalDamage / totalBattles) : 0;
+
+        // Update UI
+        document.getElementById("p1_damage").textContent = maxSaXon.toLocaleString();
+        document.getElementById("p2_damage").textContent = maxDevil.toLocaleString();
+        
+        document.getElementById("p1_avg_damage").textContent = avgSaXonDamage.toLocaleString();
+        document.getElementById("p2_avg_damage").textContent = avgDevilDamage.toLocaleString();
+        
+        document.getElementById("p1_best_tank").textContent = saXonBestTank;
+        document.getElementById("p2_best_tank").textContent = devilBestTank;
+        
+        document.getElementById("p1_total_frags").textContent = saXonTotalFrags.toLocaleString();
+        document.getElementById("p2_total_frags").textContent = devilTotalFrags.toLocaleString();
+        
+        document.getElementById("total_battles").textContent = totalBattles.toLocaleString();
+        document.getElementById("win_rate").textContent = `${winRate}%`;
+        document.getElementById("total_damage").textContent = totalDamage.toLocaleString();
+        document.getElementById("total_platoon_frags").textContent = totalFrags.toLocaleString();
+
+        // Determine winner
+        document.getElementById("p1").classList.remove("winner");
+        document.getElementById("p2").classList.remove("winner");
+
+        if (maxSaXon > maxDevil) {
+            document.getElementById("p1").classList.add("winner");
+        } else if (maxDevil > maxSaXon) {
+            document.getElementById("p2").classList.add("winner");
+        } else if (maxSaXon > 0 && maxSaXon === maxDevil) {
+            // Tie - both get winner class
+            document.getElementById("p1").classList.add("winner");
+            document.getElementById("p2").classList.add("winner");
+        }
+    } catch (error) {
+        console.error('Помилка завантаження даних:', error);
+    }
+}
+
+// Initial load
+loadData();
+
+// Auto-refresh every 30 seconds
+setInterval(loadData, 30000);
+</script>
+
+</body>
+</html>
