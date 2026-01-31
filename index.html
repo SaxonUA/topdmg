@@ -16,10 +16,12 @@
         font-family: 'Segoe UI', 'Roboto', 'Arial Narrow Bold', sans-serif;
         color: #fff;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
         padding: 10px;
+        gap: 30px;
     }
 
     .widget {
@@ -59,23 +61,22 @@
         margin-bottom: 20px;
     }
 
-.title {
-    font-size: 2.4rem; /* ← збільшили */
-    font-weight: 900;
-    color: #ffd166; /* ← жовтий як winrate / total damage */
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    text-shadow:
-        0 2px 0 rgba(0, 0, 0, 0.8),
-        0 4px 10px rgba(0, 0, 0, 0.6);
-}
+    .title {
+        font-size: 2.4rem;
+        font-weight: 900;
+        color: #ffd166;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-shadow:
+            0 2px 0 rgba(0, 0, 0, 0.8),
+            0 4px 10px rgba(0, 0, 0, 0.6);
+    }
 
     .players-container {
         display: flex;
         justify-content: space-between;
         align-items: stretch;
         gap: 15px;
-        margin-bottom: 20px;
         min-height: 220px;
     }
 
@@ -274,13 +275,12 @@
         text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
-    .platoon-stats {
-        background: rgba(25, 25, 40, 0.95);
-        border-radius: 12px;
-        padding: 15px;
-        border-left: 3px solid #06d6a0;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    }
+.platoon-stats {
+    background: rgba(25, 25, 40, 0.95);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
 
     .platoon-stats h3 {
         color: #06d6a0;
@@ -345,6 +345,7 @@
 </head>
 
 <body>
+<!-- Блок 1: Гравці -->
 <div class="widget">
     <div class="header">
         <h1 class="title">Максимальна Шкода</h1>
@@ -441,7 +442,10 @@
             </div>
         </div>
     </div>
+</div>
 
+<!-- Блок 2: Статистика взводу -->
+<div class="widget">
     <div class="platoon-stats">
         <h3><i class="fas fa-users"></i> Статистика взводу</h3>
         <div class="stats-grid">
