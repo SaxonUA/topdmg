@@ -12,8 +12,8 @@
     }
 
     body {
-        background: #0a0a0f;
-        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        background: transparent !important;
+        font-family: 'Segoe UI', 'Roboto', 'Arial Narrow Bold', sans-serif;
         color: #fff;
         display: flex;
         justify-content: center;
@@ -23,14 +23,21 @@
     }
 
     .widget {
-        width: 560px;
-        background: linear-gradient(145deg, #1a1a2e 0%, #0f0f1a 100%);
-        border-radius: 16px;
-        padding: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(255, 107, 0, 0.3);
+        width: 620px;
+        background: linear-gradient(145deg, 
+            rgba(26, 26, 46, 0.85) 0%, 
+            rgba(15, 15, 26, 0.85) 100%);
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 
+            0 15px 35px rgba(0, 0, 0, 0.8),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 107, 0, 0.4);
         position: relative;
         overflow: hidden;
+        opacity: 0.95;
     }
 
     .widget::before {
@@ -39,265 +46,339 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #ff6b00, #ffd166);
+        height: 4px;
+        background: linear-gradient(90deg, 
+            #ff6b00 0%, 
+            #ffd166 50%, 
+            #ff6b00 100%);
         z-index: 2;
+        box-shadow: 0 0 15px rgba(255, 107, 0, 0.7);
     }
 
     .header {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .title {
-        font-size: 1.5rem;
+        font-size: 2.2rem !important;
         font-weight: 900;
         background: linear-gradient(90deg, #ff6b00, #ffd166);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
+        text-shadow: 
+            0 2px 10px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(255, 107, 0, 0.5);
+        padding: 5px 0;
     }
 
     .players-container {
         display: flex;
         justify-content: space-between;
         align-items: stretch;
-        gap: 15px;
-        margin-bottom: 20px;
+        gap: 20px;
+        margin-bottom: 25px;
     }
 
     .player-card {
         flex: 1;
-        background: rgba(25, 25, 35, 0.8);
-        border-radius: 12px;
-        padding: 12px;
+        background: rgba(30, 30, 45, 0.9);
+        border-radius: 16px;
+        padding: 20px;
         transition: all 0.3s ease;
         position: relative;
-        border: 2px solid transparent;
+        border: 2px solid rgba(255, 255, 255, 0.08);
         display: flex;
         flex-direction: column;
+        backdrop-filter: blur(5px);
     }
 
     .player-card.winner {
         border-color: #ff6b00;
-        background: rgba(35, 25, 25, 0.9);
-        box-shadow: 0 0 25px rgba(255, 107, 0, 0.4);
+        background: rgba(40, 30, 30, 0.95);
+        box-shadow: 
+            0 0 35px rgba(255, 107, 0, 0.6),
+            inset 0 0 20px rgba(255, 107, 0, 0.2);
+        transform: translateY(-5px);
     }
 
     .player-card.winner::after {
         content: '🏆';
         position: absolute;
-        top: -10px;
+        top: -18px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 0.7rem;
-        z-index: 1;
+        font-size: 1.8rem;
+        z-index: 3;
+        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
     }
 
     .player-header {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        margin-bottom: 12px;
+        gap: 15px;
+        margin-bottom: 20px;
     }
 
     .player-avatar {
-        width: 40px;
-        height: 40px;
+        width: 55px;
+        height: 55px;
         background: linear-gradient(135deg, #2a2a4a, #1a1a2e);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         color: #ffd166;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 3px solid rgba(255, 255, 255, 0.15);
         flex-shrink: 0;
         overflow: hidden;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     .player-info h2 {
-        font-size: 1.3rem;
+        font-size: 1.8rem !important;
         font-weight: 900;
-        color: #f8fafc;
+        color: #ffffff;
         text-align: center;
+        text-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.9),
+            0 0 15px rgba(255, 255, 255, 0.1);
+        letter-spacing: 0.5px;
     }
 
     .damage-section {
         text-align: center;
-        margin-bottom: 12px;
+        margin-bottom: 20px;
         flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding: 15px 0;
     }
 
     .damage-value {
-        font-size: 2.5rem;
+        font-size: 5rem !important;
         font-weight: 900;
         color: #ff6b00;
-        text-shadow: 0 0 15px rgba(255, 107, 0, 0.5);
+        text-shadow: 
+            0 3px 20px rgba(255, 107, 0, 0.8),
+            0 0 30px rgba(255, 107, 0, 0.6),
+            2px 2px 0 rgba(0, 0, 0, 0.8);
         line-height: 1;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        letter-spacing: -1px;
     }
 
     .damage-label {
-        font-size: 0.7rem;
-        color: #94a3b8;
+        font-size: 1.2rem !important;
+        color: #cbd5e1;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .stats-section {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-top: 10px;
+        gap: 12px;
+        margin-top: 15px;
     }
 
     .top-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 6px;
+        gap: 10px;
     }
 
     .stat-item {
         display: flex;
         flex-direction: column;
-        padding: 6px;
-        background: rgba(15, 15, 25, 0.6);
-        border-radius: 6px;
+        padding: 12px;
+        background: rgba(20, 20, 35, 0.8);
+        border-radius: 10px;
         align-items: center;
         justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(4px);
     }
 
     .stat-label {
-        font-size: 0.6rem;
+        font-size: 0.95rem !important;
         color: #94a3b8;
-        margin-bottom: 3px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
-        gap: 3px;
+        gap: 6px;
+        font-weight: 600;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
     .stat-label i {
-        font-size: 0.5rem;
+        font-size: 0.9rem;
     }
 
     .stat-value {
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: #f8fafc;
+        font-size: 2rem !important;
+        font-weight: 900;
+        color: #ffffff;
+        text-shadow: 
+            0 2px 10px rgba(0, 0, 0, 0.9),
+            0 0 15px rgba(255, 255, 255, 0.1);
+        letter-spacing: 0.5px;
     }
 
     .tank-row {
-        padding: 10px;
-        background: rgba(15, 15, 25, 0.7);
-        border-radius: 6px;
+        padding: 15px;
+        background: rgba(20, 20, 35, 0.9);
+        border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 40px;
-        border-top: 2px solid #06d6a0;
+        min-height: 60px;
+        border-top: 3px solid #06d6a0;
+        border-left: 1px solid rgba(6, 214, 160, 0.3);
+        border-right: 1px solid rgba(6, 214, 160, 0.3);
+        border-bottom: 1px solid rgba(6, 214, 160, 0.3);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.4);
     }
 
     .tank-label {
-        font-size: 0.6rem;
+        font-size: 0.95rem !important;
         color: #94a3b8;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 3px;
+        gap: 6px;
+        font-weight: 600;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
     .tank-value {
-        font-size: 1rem;
-        font-weight: 700;
+        font-size: 1.8rem !important;
+        font-weight: 900;
         color: #06d6a0;
         text-align: center;
         font-style: italic;
+        text-shadow: 
+            0 2px 10px rgba(6, 214, 160, 0.6),
+            0 0 15px rgba(6, 214, 160, 0.3),
+            1px 1px 0 rgba(0, 0, 0, 0.8);
+        letter-spacing: 0.5px;
     }
 
     .vs-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
+        width: 40px;
         flex-shrink: 0;
     }
 
     .vs {
-        background: rgba(255, 255, 255, 0.1);
-        width: 28px;
-        height: 28px;
+        background: rgba(255, 255, 255, 0.15);
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 900;
-        font-size: 0.8rem;
+        font-size: 1.2rem;
         color: #ffd166;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        backdrop-filter: blur(5px);
     }
 
     .platoon-stats {
-        background: rgba(20, 20, 30, 0.9);
-        border-radius: 8px;
-        padding: 12px;
-        margin-top: 12px;
-        border-left: 3px solid #06d6a0;
+        background: rgba(25, 25, 40, 0.95);
+        border-radius: 14px;
+        padding: 20px;
+        margin-top: 20px;
+        border-left: 4px solid #06d6a0;
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
     }
 
     .platoon-stats h3 {
         color: #06d6a0;
-        font-size: 0.9rem;
-        margin-bottom: 10px;
+        font-size: 1.4rem !important;
+        margin-bottom: 20px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 10px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        font-weight: 800;
     }
 
     .platoon-stats h3 i {
-        font-size: 0.8rem;
+        font-size: 1.3rem;
     }
 
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        gap: 15px;
     }
 
     .stat-card {
-        background: rgba(30, 30, 40, 0.8);
-        border-radius: 6px;
-        padding: 8px;
+        background: rgba(35, 35, 55, 0.9);
+        border-radius: 12px;
+        padding: 18px 12px;
         text-align: center;
-        transition: transform 0.2s;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
     }
 
     .stat-card:hover {
-        transform: translateY(-2px);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     }
 
     .stat-card .value {
-        font-size: 1.1rem;
+        font-size: 2.8rem !important;
         font-weight: 900;
         color: #ffd166;
-        margin-bottom: 2px;
+        margin-bottom: 8px;
+        text-shadow: 
+            0 3px 15px rgba(255, 209, 102, 0.7),
+            0 0 20px rgba(255, 209, 102, 0.4),
+            2px 2px 0 rgba(0, 0, 0, 0.8);
+        letter-spacing: 0.5px;
     }
 
     .stat-card .label {
-        color: #94a3b8;
-        font-size: 0.6rem;
+        color: #cbd5e1;
+        font-size: 1rem !important;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Анімація оновлення даних */
+    @keyframes highlightUpdate {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .damage-value.updated {
+        animation: highlightUpdate 0.5s ease;
     }
 </style>
 </head>
@@ -493,23 +574,34 @@ async function loadData() {
         const avgSaXonDamage = totalBattles > 0 ? Math.round(saXonTotalDamage / totalBattles) : 0;
         const avgDevilDamage = totalBattles > 0 ? Math.round(devilTotalDamage / totalBattles) : 0;
 
-        // Update UI
-        document.getElementById("p1_damage").textContent = maxSaXon.toLocaleString();
-        document.getElementById("p2_damage").textContent = maxDevil.toLocaleString();
+        // Update UI with animation
+        const animateUpdate = (element, newValue) => {
+            const oldValue = element.textContent;
+            if (oldValue !== newValue) {
+                element.classList.add('updated');
+                setTimeout(() => {
+                    element.classList.remove('updated');
+                }, 500);
+            }
+            element.textContent = newValue;
+        };
+
+        animateUpdate(document.getElementById("p1_damage"), maxSaXon.toLocaleString());
+        animateUpdate(document.getElementById("p2_damage"), maxDevil.toLocaleString());
         
-        document.getElementById("p1_avg_damage").textContent = avgSaXonDamage.toLocaleString();
-        document.getElementById("p2_avg_damage").textContent = avgDevilDamage.toLocaleString();
+        animateUpdate(document.getElementById("p1_avg_damage"), avgSaXonDamage.toLocaleString());
+        animateUpdate(document.getElementById("p2_avg_damage"), avgDevilDamage.toLocaleString());
         
         document.getElementById("p1_best_tank").textContent = saXonBestTank;
         document.getElementById("p2_best_tank").textContent = devilBestTank;
         
-        document.getElementById("p1_total_frags").textContent = saXonTotalFrags.toLocaleString();
-        document.getElementById("p2_total_frags").textContent = devilTotalFrags.toLocaleString();
+        animateUpdate(document.getElementById("p1_total_frags"), saXonTotalFrags.toLocaleString());
+        animateUpdate(document.getElementById("p2_total_frags"), devilTotalFrags.toLocaleString());
         
-        document.getElementById("total_battles").textContent = totalBattles.toLocaleString();
-        document.getElementById("win_rate").textContent = `${winRate}%`;
-        document.getElementById("total_damage").textContent = totalDamage.toLocaleString();
-        document.getElementById("total_platoon_frags").textContent = totalFrags.toLocaleString();
+        animateUpdate(document.getElementById("total_battles"), totalBattles.toLocaleString());
+        animateUpdate(document.getElementById("win_rate"), `${winRate}%`);
+        animateUpdate(document.getElementById("total_damage"), totalDamage.toLocaleString());
+        animateUpdate(document.getElementById("total_platoon_frags"), totalFrags.toLocaleString());
 
         // Determine winner
         document.getElementById("p1").classList.remove("winner");
