@@ -21,27 +21,21 @@ body{
     gap:30px
 }
 
+/* === ОСНОВНІ БЛОКИ — ПРОЗОРІ, БЕЗ РАМОК І ТІНЕЙ === */
 .widget{
     width:680px;
-    background:linear-gradient(145deg,rgba(26,26,46,.92),rgba(15,15,26,.95));
-    backdrop-filter:blur(10px) saturate(180%);
+    background:rgba(20,20,35,.55); /* 🔹 прозорий фон */
+    backdrop-filter:blur(6px);
     border-radius:18px;
     padding:18px 22px;
-    box-shadow:none;
-    border:2px solid rgba(255,170,60,.6);
+    border:none;            /* ❌ рамка */
+    box-shadow:none;        /* ❌ тінь */
     position:relative;
     overflow:hidden;
 }
 
-.widget::before{
-    content:'';
-    position:absolute;
-    top:0;
-    left:2px;
-    right:2px;
-    height:3px;
-    background:linear-gradient(90deg,#ffd166,#06d6a0,#ffd166);
-}
+/* ❌ прибрано кольорову лінію */
+.widget::before{display:none}
 
 .header{text-align:center;margin-bottom:20px}
 
@@ -53,6 +47,7 @@ body{
     text-transform:uppercase;
 }
 
+/* === ГРАВЦІ === */
 .players-container{
     display:grid;
     grid-template-columns:1fr 46px 1fr;
@@ -60,10 +55,11 @@ body{
 }
 
 .player-card{
-    background:rgba(20,20,35,.95);
+    background:rgba(15,15,30,.55); /* прозоро */
     border-radius:16px;
     padding:18px;
-    border:1px solid rgba(255,255,255,.08);
+    border:none;
+    box-shadow:none;
     display:flex;
     flex-direction:column;
 }
@@ -85,10 +81,9 @@ body{
     justify-content:center;
     font-size:1.6rem;
     color:#ffd166;
-    border:2px solid rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.15);
     background-size:cover;
     background-position:center;
-    flex-shrink:0;
 }
 
 .player-info h2{
@@ -97,10 +92,13 @@ body{
     white-space:nowrap;
 }
 
-.damage-section{text-align:center;margin:10px 0 18px}
+.damage-section{
+    text-align:center;
+    margin:10px 0 18px;
+}
 
 .damage-label{
-    font-size:1.15rem;
+    font-size:1.1rem;
     color:#9be7d8;
     text-transform:uppercase;
     font-weight:900;
@@ -110,33 +108,39 @@ body{
 }
 
 .damage-value{
-    font-size:4.8rem;
+    font-size:4.6rem;
     font-weight:900;
     color:#ff7a00;
+    line-height:1;
 }
 
+/* === СТАТИ ГРАВЦЯ === */
 .stat-item{
-    background:rgba(15,15,30,.9);
+    background:rgba(10,10,25,.55);
     border-radius:12px;
-    padding:18px;
+    padding:16px;
     text-align:center;
+    border:none;
+    box-shadow:none;
 }
 
 .stat-label{
-    font-size:1.05rem;
+    font-size:1rem;
     color:#9be7d8;
     font-weight:800;
     display:flex;
     justify-content:center;
     gap:8px;
+    text-transform:uppercase;
 }
 
 .stat-value{
-    font-size:3.2rem;
+    font-size:3rem;
     font-weight:900;
     color:#ffd166;
 }
 
+/* VS */
 .vs-container{
     display:flex;
     align-items:center;
@@ -146,7 +150,7 @@ body{
 .vs{
     width:38px;height:38px;
     border-radius:50%;
-    background:rgba(255,255,255,.1);
+    background:rgba(255,255,255,.12);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -154,10 +158,13 @@ body{
     font-weight:900;
 }
 
+/* === СТАТИСТИКА ВЗВОДУ === */
 .platoon-stats{
-    background:linear-gradient(145deg,rgba(25,25,40,.95),rgba(15,15,30,.95));
+    background:rgba(20,20,35,.55);
     border-radius:16px;
     padding:18px;
+    border:none;
+    box-shadow:none;
 }
 
 .platoon-stats h3{
@@ -175,14 +182,16 @@ body{
 }
 
 .stat-card{
-    background:rgba(20,20,35,.9);
+    background:rgba(10,10,25,.55);
     border-radius:12px;
     padding:16px 10px;
     text-align:center;
+    border:none;
+    box-shadow:none;
 }
 
 .stat-card .value{
-    font-size:2.4rem;
+    font-size:2.3rem;
     font-weight:900;
     color:#ffd166;
 }
@@ -197,7 +206,7 @@ body{
 
 <body>
 
-<!-- 🔥 БЛОК ПОСТРІЛУ -->
+<!-- 🔥 МАКСИМАЛЬНИЙ ПОСТРІЛ -->
 <div class="widget">
     <div class="header"><div class="title">Максимальний Постріл</div></div>
 
