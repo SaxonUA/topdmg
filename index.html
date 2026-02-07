@@ -30,15 +30,17 @@ body{
     box-shadow:0 15px 35px rgba(0,0,0,.85);
     border:2px solid rgba(255,170,60,.6);
     position:relative;
+    overflow:hidden;
 }
 
 .widget::before{
     content:'';
     position:absolute;
-    top:0;left:0;right:0;
+    top:0;
+    left:2px;
+    right:2px;
     height:3px;
     background:linear-gradient(90deg,#ffd166,#06d6a0,#ffd166);
-    border-radius:18px 18px 0 0;
 }
 
 .header{text-align:center;margin-bottom:20px}
@@ -49,17 +51,15 @@ body{
     color:#ffd166;
     letter-spacing:2px;
     text-transform:uppercase;
-    text-shadow:0 3px 10px rgba(0,0,0,.7);
 }
 
 .players-container{
-    display:flex;
-    justify-content:space-between;
+    display:grid;
+    grid-template-columns:1fr 46px 1fr;
     gap:18px;
 }
 
 .player-card{
-    flex:1;
     background:rgba(20,20,35,.95);
     border-radius:16px;
     padding:18px;
@@ -88,53 +88,37 @@ body{
     border:2px solid rgba(255,255,255,.18);
     background-size:cover;
     background-position:center;
+    flex-shrink:0;
 }
 
 .player-info h2{
-    font-size:2.4rem;
+    font-size:2.5rem;
     font-weight:900;
-    letter-spacing:.8px;
-    text-shadow:0 3px 6px rgba(0,0,0,.8);
+    white-space:nowrap;
 }
 
-.damage-section{
-    text-align:center;
-    margin:10px 0 18px;
-}
+.damage-section{text-align:center;margin:10px 0 18px}
 
 .damage-label{
     font-size:1.15rem;
     color:#9be7d8;
     text-transform:uppercase;
-    letter-spacing:1.1px;
     font-weight:900;
-    margin-bottom:6px;
     display:flex;
-    align-items:center;
     justify-content:center;
     gap:8px;
-}
-
-.damage-label i{
-    color:#ffd166;
-    font-size:1.1rem;
 }
 
 .damage-value{
     font-size:4.8rem;
     font-weight:900;
     color:#ff7a00;
-    line-height:1;
-    text-shadow:0 2px 0 rgba(0,0,0,.8),0 5px 12px rgba(0,0,0,.6);
 }
-
-.stats-section{margin-top:auto}
 
 .stat-item{
     background:rgba(15,15,30,.9);
     border-radius:12px;
     padding:18px;
-    border:1px solid rgba(255,255,255,.07);
     text-align:center;
 }
 
@@ -142,25 +126,15 @@ body{
     font-size:1.05rem;
     color:#9be7d8;
     font-weight:800;
-    margin-bottom:8px;
     display:flex;
-    align-items:center;
     justify-content:center;
     gap:8px;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-    text-align:center;
-}
-
-.stat-label i{
-    color:#06d6a0;
 }
 
 .stat-value{
     font-size:3.2rem;
     font-weight:900;
     color:#ffd166;
-    text-shadow:0 0 12px rgba(255,209,102,.45);
 }
 
 .vs-container{
@@ -176,21 +150,18 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:900;
     color:#06d6a0;
-    border:2px solid rgba(255,255,255,.18);
+    font-weight:900;
 }
 
 .platoon-stats{
     background:linear-gradient(145deg,rgba(25,25,40,.95),rgba(15,15,30,.95));
     border-radius:16px;
     padding:18px;
-    border:1px solid rgba(255,255,255,.08);
 }
 
 .platoon-stats h3{
     color:#06d6a0;
-    font-size:1.25rem;
     margin-bottom:14px;
     display:flex;
     gap:8px;
@@ -208,7 +179,6 @@ body{
     border-radius:12px;
     padding:16px 10px;
     text-align:center;
-    border:1px solid rgba(255,255,255,.08);
 }
 
 .stat-card .value{
@@ -221,21 +191,15 @@ body{
     font-size:.85rem;
     color:#cbd5e1;
     text-transform:uppercase;
-    letter-spacing:.8px;
-    font-weight:700;
 }
-
-.updated{animation:flash .4s ease}
-@keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 </style>
 </head>
 
 <body>
 
+<!-- 🔥 БЛОК ПОСТРІЛУ -->
 <div class="widget">
-    <div class="header">
-        <div class="title">Максимальний Постріл</div>
-    </div>
+    <div class="header"><div class="title">Максимальний Постріл</div></div>
 
     <div class="players-container">
 
@@ -244,17 +208,13 @@ body{
                 <div class="player-avatar" style="background-image:url('https://saxonua.github.io/site/logo.png')"></div>
                 <div class="player-info"><h2>SaXon</h2></div>
             </div>
-
             <div class="damage-section">
                 <div class="damage-label"><i class="fas fa-crosshairs"></i>Максимальний постріл</div>
                 <div class="damage-value" id="p1_shot">0</div>
             </div>
-
-            <div class="stats-section">
-                <div class="stat-item">
-                    <div class="stat-label"><i class="fas fa-bolt"></i>Максимальна шкода</div>
-                    <div class="stat-value" id="p1_max_damage">0</div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-label"><i class="fas fa-bolt"></i>Максимальна шкода</div>
+                <div class="stat-value" id="p1_max_damage">0</div>
             </div>
         </div>
 
@@ -263,25 +223,22 @@ body{
         <div class="player-card">
             <div class="player-header">
                 <div class="player-avatar"><i class="fas fa-helmet-battle"></i></div>
-                <div class="player-info"><h2>Devil_484</h2></div>
+                <div class="player-info"><h2>Devil</h2></div>
             </div>
-
             <div class="damage-section">
                 <div class="damage-label"><i class="fas fa-crosshairs"></i>Максимальний постріл</div>
                 <div class="damage-value" id="p2_shot">0</div>
             </div>
-
-            <div class="stats-section">
-                <div class="stat-item">
-                    <div class="stat-label"><i class="fas fa-bolt"></i>Максимальна шкода</div>
-                    <div class="stat-value" id="p2_max_damage">0</div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-label"><i class="fas fa-bolt"></i>Максимальна шкода</div>
+                <div class="stat-value" id="p2_max_damage">0</div>
             </div>
         </div>
 
     </div>
 </div>
 
+<!-- 📊 СТАТИСТИКА ВЗВОДУ -->
 <div class="widget">
     <div class="platoon-stats">
         <h3><i class="fas fa-users"></i> Статистика взводу</h3>
@@ -302,45 +259,35 @@ const GID_SHOT="1558487510";
 const URL_STATS=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID_STATS}`;
 const URL_SHOT=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID_SHOT}`;
 
-const csv=t=>t.replace(/\r/g,"").split("\n").filter(l=>l).map(l=>l.split(","));
-const toInt=v=>parseInt(String(v).replace(/[^\d]/g,""))||0;
-
-function upd(el,v){
-    if(el.textContent!==v){
-        el.classList.add("updated");
-        setTimeout(()=>el.classList.remove("updated"),400);
-    }
-    el.textContent=v;
-}
+const csv=t=>t.replace(/\r/g,"").split("\n").filter(Boolean).map(r=>r.split(","));
+const n=v=>parseInt(String(v).replace(/[^\d]/g,""))||0;
 
 async function loadShot(){
-    const t=csv(await (await fetch(URL_SHOT+"&_="+Date.now())).text());
-    if(t[1]){
-        upd(p1_shot,toInt(t[1][4]).toLocaleString());
-        upd(p2_shot,toInt(t[1][5]).toLocaleString());
+    const d=csv(await (await fetch(URL_SHOT+"&_="+Date.now())).text());
+    if(d[1]){
+        p1_shot.textContent=n(d[1][4]).toLocaleString();
+        p2_shot.textContent=n(d[1][5]).toLocaleString();
     }
 }
 
 async function loadStats(){
-    const t=csv(await (await fetch(URL_STATS+"&_="+Date.now())).text());
-    let max1=0,max2=0,b=0,w=0,td=0,tf=0;
-    for(let i=1;i<t.length;i++){
-        const r=t[i]; if(!r||r.length<9)continue;
-        const d1=toInt(r[3]),d2=toInt(r[4]),f1=toInt(r[5]),f2=toInt(r[6]),win=toInt(r[8]);
-        max1=Math.max(max1,d1);
-        max2=Math.max(max2,d2);
-        td+=d1+d2; tf+=f1+f2;
-        b++; if(win===1)w++;
+    const d=csv(await (await fetch(URL_STATS+"&_="+Date.now())).text());
+    let b=0,w=0,td=0,tf=0,m1=0,m2=0;
+    for(let i=1;i<d.length;i++){
+        const r=d[i]; if(!r||r.length<9)continue;
+        const d1=n(r[3]),d2=n(r[4]),f1=n(r[5]),f2=n(r[6]),win=n(r[8]);
+        m1=Math.max(m1,d1); m2=Math.max(m2,d2);
+        td+=d1+d2; tf+=f1+f2; b++; if(win===1)w++;
     }
-    upd(p1_max_damage,max1.toLocaleString());
-    upd(p2_max_damage,max2.toLocaleString());
-    upd(total_battles,b.toLocaleString());
-    upd(win_rate,b?((w/b)*100).toFixed(1)+"%":"0%");
-    upd(total_damage,td.toLocaleString());
-    upd(total_platoon_frags,tf.toLocaleString());
+    p1_max_damage.textContent=m1.toLocaleString();
+    p2_max_damage.textContent=m2.toLocaleString();
+    total_battles.textContent=b;
+    win_rate.textContent=b?((w/b)*100).toFixed(1)+"%":"0%";
+    total_damage.textContent=td.toLocaleString();
+    total_platoon_frags.textContent=tf;
 }
 
-function refresh(){loadStats();loadShot()}
+function refresh(){loadShot();loadStats()}
 refresh();
 setInterval(refresh,15000);
 </script>
